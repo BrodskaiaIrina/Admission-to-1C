@@ -1,6 +1,7 @@
 import numpy as np
-from sys import argv
 import os
+from sys import argv
+
 
 first_dir = argv[1]
 second_dir = argv[2]
@@ -34,14 +35,14 @@ def Dist(seq1, seq2):
 def GetSimilarity(first, second):
     with open(first_dir + '/' + first, 'r') as file:
         data = file.read().replace('\n', '')
-        str1=data.replace(' ', '')
+        str1 = data.replace(' ', '')
     with open(second_dir + '/' + second, 'r') as file:
         data = file.read().replace('\n', '')
-        str2=data.replace(' ', '')
-    if(len(str1)>len(str2)):
-        length=len(str1)
+        str2 = data.replace(' ', '')
+    if(len(str1) > len(str2)):
+        length = len(str1)
     else:
-        length=len(str2)
+        length = len(str2)
 
     return 100 - round((Dist(str1, str2) / length) * 100, 2)
 
@@ -53,6 +54,7 @@ only_in_first = []
 only_in_second = []
 
 
+#finding similar files
 for first_filename in os.listdir(first_dir):
     is_in_second = False
     for second_filename in os.listdir(second_dir):
@@ -70,6 +72,7 @@ for first_filename in os.listdir(first_dir):
         only_in_first.append(first_filename)
 
 
+#finding unique files
 for second_filename in os.listdir(second_dir):
     is_in_first = False
     for pair in identical:
@@ -84,6 +87,7 @@ for second_filename in os.listdir(second_dir):
         only_in_second.append(second_filename)
 
 
+# printing the answer
 print('Identical files:')
 for pair in identical:
     print(first_dir + '/' + pair[0] + ' - ' + second_dir + '/' + pair[1])
@@ -92,7 +96,7 @@ print()
 
 print('Similar files:')
 for i, pair in enumerate(similar):
-    print(first_dir + '/' + pair[0] + ' - ' + second_dir + '/' + pair[1] + ' - ' + str(dists[i]))
+    print(first_dir + '/' + pair[0] + ' - ' + second_dir + '/' + pair[1] + ' - ' + str(int(dists[i])) + '%')
 
 print()
 
@@ -105,4 +109,3 @@ print()
 print('Only in second directory:')
 for file in only_in_second:
     print(second_dir + '/' + file)
-
